@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane accessibleRole="PASSWORD_FIELD" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginScreen">
+    <children>
+        <Label fx:id="loginLbl" layoutX="388.0" layoutY="34.0" prefHeight="35.0" prefWidth="268.0" text="Login Form"
+               AnchorPane.leftAnchor="388.0" AnchorPane.rightAnchor="244.0">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="usernameTxt" layoutX="388.0" layoutY="196.0" prefHeight="34.0" prefWidth="179.0"/>
+        <Label fx:id="usernameLbl" layoutX="387.0" layoutY="162.0" prefHeight="27.0" prefWidth="179.0" text="Username"
+               textAlignment="CENTER">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <Label fx:id="passwordLbl" layoutX="387.0" layoutY="258.0" prefHeight="27.0" prefWidth="179.0" text="Password"
+               textAlignment="CENTER">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="passwordTxt" accessibleRole="PASSWORD_FIELD" layoutX="388.0" layoutY="291.0" prefHeight="34.0"
+                   prefWidth="179.0"/>
+        <Button fx:id="loginButton" layoutX="388.0" layoutY="357.0" mnemonicParsing="false" onAction="#login"
+                prefHeight="25.0" prefWidth="179.0" text="Login">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Button>
+        <Label fx:id="zoneIdLbl" layoutX="567.0" layoutY="437.0" prefHeight="27.0" prefWidth="328.0"
+               textAlignment="CENTER">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
