@@ -10,12 +10,15 @@ import javafx.stage.Stage;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * This is the main class and where the program starts. The login screen fxml is launched from here.
  * The JDBC open and close connection methods are called from the main class.
  */
 public class Main extends Application {
+    ResourceBundle rb = ResourceBundle.getBundle("language", Locale.getDefault());
+    Locale userLocale = Locale.getDefault();
 
     /**
      * This is the start method and it will be called from the main method when launch(args) is called.
@@ -28,7 +31,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("/View/loginScreen.fxml"))));
-        primaryStage.setTitle("Customer Appointment Management System");
+        if (userLocale.getLanguage().equals("fr") || userLocale.getLanguage().equals("en")) {
+            primaryStage.setTitle(rb.getString("Application_title"));
+        }
+
         primaryStage.setScene(new Scene(root, 900, 500));
         primaryStage.setMinHeight(500);
         primaryStage.setMaxHeight(700);
@@ -44,7 +50,7 @@ public class Main extends Application {
      * @param args Command line argument that are used when launch() is called.
      */
     public static void main(String[] args) {
-        //Locale.setDefault(new Locale("fr"));
+        Locale.setDefault(new Locale("fr"));
 
         JDBC.openConnection();
         launch(args);
