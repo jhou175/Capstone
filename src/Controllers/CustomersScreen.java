@@ -122,12 +122,20 @@ public class CustomersScreen implements Initializable {
         String address = addressTxt.getText();
         String zip = postalTxt.getText();
         String phone = phoneTxt.getText();
+        String zoomEmail = zoomEmailTxt.getText();
 
 
         if (checkInput()) {
             Alert blackAlert = new Alert(Alert.AlertType.ERROR, "All fields must be filled out to add a customer. Please check and try again.");
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
+        }
+        if(virtualAppointmentRadio.isSelected()){
+            if(zoomEmail.isBlank()){
+                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual appointments.");
+                blackAlert.setHeaderText("Blank input field(s).");
+                blackAlert.showAndWait();
+            }
         }
 //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
 //            if(countryCombo.getSelectionModel().getSelectedItem().toString().equals("U.S")) {
@@ -471,7 +479,7 @@ public class CustomersScreen implements Initializable {
     }
 
     /**
-     * This method has a string variable for customerName passed into it and runs a search on the customer table and returns any mathces.
+     * This method has a string variable for customerName passed into it and runs a search on the customer table and returns any matches.
      *
      * @param name - the inputted paramater from the search textfield
      * @return customerMatch - an observablelist that contains any matching customer entities.
@@ -482,7 +490,7 @@ public class CustomersScreen implements Initializable {
         ObservableList<Customers> allCustomers = CustomersQuery.selectAllCustomers();
 
         for (Customers C : allCustomers) {
-            if (C.getCustomerName().contains(name)) {
+            if (C.getCustomerName().contains(name.toUpperCase()) || (C.getCustomerName().contains(name.toLowerCase()))) {
                 customerMatch.add(C);
             }
         }

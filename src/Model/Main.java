@@ -50,7 +50,7 @@ public class Main extends Application {
      * @param args Command line argument that are used when launch() is called.
      */
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("fr"));
+        //Locale.setDefault(new Locale("fr"));
 
         JDBC.openConnection();
         launch(args);
