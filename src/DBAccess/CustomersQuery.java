@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 /**
@@ -25,19 +26,25 @@ public abstract class CustomersQuery {
      * @param phone        String value for phone number variable.
      * @param divisionId   integer value for the divisionId.
      */
-    public static void insertCustomers(String customerName, String address, String zip, String phone, int divisionId) {
+    public static int insertCustomers(String customerName, String address, String zip, String phone, int divisionId) {
+        int id = 0;
         String sql = "INSERT INTO CUSTOMERS(Customer_Name, Address, Postal_Code, Phone, Division_ID) Values(?,?,?,?,?)";
         try {
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, customerName);
             ps.setString(2, address);
             ps.setString(3, zip);
             ps.setString(4, phone);
             ps.setInt(5, divisionId);
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()){
+                id = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     /**
@@ -179,7 +186,22 @@ public abstract class CustomersQuery {
         return c;
     }
 
+    public static int selectLastInserted() throws SQLException {
+       int ID = 0;
+        String sql = "SELECT MAX(Customer_ID) from Customers ";
 
+        try{
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ID=rs.getInt("Customer_ID");
+
+
+    } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return ID;
+    }
 }
 
 

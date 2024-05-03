@@ -68,6 +68,10 @@ public class Customers {
         this.customerId = customerId;
         this.customerName = customerName;
     }
+    public Customers(int customerId){
+        this.customerId = customerId;
+    }
+
 
     /**
      * This method retrieves the customerId.

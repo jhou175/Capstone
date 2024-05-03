@@ -1,13 +1,7 @@
 package Controllers;
 
-import DBAccess.AppointmentsQuery;
-import DBAccess.CountriesQuery;
-import DBAccess.CustomersQuery;
-import DBAccess.FirstLevelDivisionQuery;
-import Model.Appointments;
-import Model.Countries;
-import Model.Customers;
-import Model.FirstLevelDivisions;
+import DBAccess.*;
+import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -63,7 +58,7 @@ public class CustomersScreen implements Initializable {
     public Button clearBtn;
     public Button reportsBtn;
     public Button searchBtn;
-    public RadioButton virtualAppointmentRadio;
+    public RadioButton virtualCustomerRadio;
 
     ObservableList<Customers> customerList;
     ObservableList<FirstLevelDivisions> divisionList = FXCollections.observableArrayList();
@@ -109,8 +104,9 @@ public class CustomersScreen implements Initializable {
 
 
     /**
-     * Method retrieves all input from text fields and combo boxes and adds the customer to the customers table
+     * Method retrieves all input from text fields and combo boxes and adds the customer to the customers table.
      * Uses the checkInput() method to validate if all text fields and combo boxes have been populated.
+     * If the virtual customer radio button is selected it will enter that customer into the virtual customer table.
      *
      * @param actionEvent When the addCustomerBtn is pressed.
      */
@@ -130,13 +126,14 @@ public class CustomersScreen implements Initializable {
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
         }
-        if(virtualAppointmentRadio.isSelected()){
-            if(zoomEmail.isBlank()){
-                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual appointments.");
+        if (virtualCustomerRadio.isSelected() && (zoomEmail.isBlank())) {
+                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
                 blackAlert.setHeaderText("Blank input field(s).");
                 blackAlert.showAndWait();
-            }
-        }
+
+        }else {
+
+
 //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
 //            if(countryCombo.getSelectionModel().getSelectedItem().toString().equals("U.S")) {
 //                Alert addressFormatAlert = new Alert(Alert.AlertType.ERROR, "Please enter in an United States address in the format of ex:\n 123 ABC Street, White Plains");
@@ -153,7 +150,7 @@ public class CustomersScreen implements Initializable {
 //                addressFormatAlert.setHeaderText("Incorrect Canadian address format.");
 //                addressFormatAlert.showAndWait();
 //            }
-        else {
+
             try {
                 division = divisionCombo.getValue().toString();
 
@@ -163,7 +160,15 @@ public class CustomersScreen implements Initializable {
                     }
                 }
 
-                CustomersQuery.insertCustomers(name, address, zip, phone, divisionID);
+                //The following lines will detect if the virtual radio button is selected or not. If it is it will enter in the customer into the customers table and will retrieve the last
+                //customerID created and use that ID to enter in that customer into the virtual customer table with the CustomerID and Zoom Email and will create a auto-incremental virtualCustomerID.
+                if (virtualCustomerRadio.isSelected()) {
+                    int customerId = CustomersQuery.insertCustomers(name, address, zip, phone, divisionID);
+                    VirtualCustomerQuery.insertVirtualCustomer(customerId, zoomEmail);
+                } else {
+                    CustomersQuery.insertCustomers(name, address, zip, phone, divisionID);
+                }
+
 
                 customerTableView.setItems(CustomersQuery.selectAllCustomers());
                 Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/customersScreen.fxml")));
@@ -171,10 +176,12 @@ public class CustomersScreen implements Initializable {
                 Scene scene = new Scene(root, 1231, 681);
                 stage.setScene(scene);
                 stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
 
@@ -220,11 +227,12 @@ public class CustomersScreen implements Initializable {
     /**
      * This method checks to make sure a customer is selected, and if one is, it populates the text fields and combo boxes with the
      * data associated with that customer.If a customer is not selected first, than an error message is displayed.
+     * This method will also check to see if the selected customer is a virtual customer and if so it will populate the textfield with the
+     * zoom email and enable the radio button and text field for virtual customers.
      *
      * @param actionEvent When the modifyCustomerBtn is pressed.
      */
     public void modifyCustomer(ActionEvent actionEvent) {
-        ObservableList<Customers> customerIdList;
         String countryMatch = "";
         String divisionMatch = "";
 
@@ -235,7 +243,7 @@ public class CustomersScreen implements Initializable {
         if (customerTableView.getSelectionModel().getSelectedItem() != null) {
             int selectedId = customerTableView.getSelectionModel().getSelectedItem().getCustomerId();
             Customers c = CustomersQuery.selectCustomerById(selectedId);
-
+            VirtualCustomers v = VirtualCustomerQuery.selectCustomerById(selectedId);
 
             customerIdTxt.setText(String.valueOf((selectedId)));
             customerNameTxt.setText(c.getCustomerName());
@@ -276,6 +284,18 @@ public class CustomersScreen implements Initializable {
                     break;
                 }
             }
+            //Checks to see if v object is null, if not, it will set the zoom email into the text field and select the radio button
+            //and enable the text field.
+            //If v is null it will set the radio button to false, clear and disable the text field.
+            if (v != null) {
+                zoomEmailTxt.setText(v.getZoomEmail());
+                virtualCustomerRadio.setSelected(true);
+                zoomEmailTxt.setDisable(false);
+            } else {
+                virtualCustomerRadio.setSelected(false);
+                zoomEmailTxt.setDisable(true);
+                zoomEmailTxt.clear();
+            }
         } else {
             Alert modifyAlert = new Alert(Alert.AlertType.ERROR, "Please select a customer in the table to be modified.");
             modifyAlert.setHeaderText("No customer selected to modify");
@@ -293,11 +313,19 @@ public class CustomersScreen implements Initializable {
      */
     public void updateCustomer(ActionEvent actionEvent) {
         int divisionID = 0;
+        String zoomEmail = zoomEmailTxt.getText();
 
         if (checkInput()) {
             Alert blackAlert = new Alert(Alert.AlertType.ERROR, "All fields must be filled out to add a customer. Please check and try again.");
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
+        }
+        if (virtualCustomerRadio.isSelected()) {
+            if (zoomEmail.isBlank()) {
+                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
+                blackAlert.setHeaderText("Blank input field(s).");
+                blackAlert.showAndWait();
+            }
         }
         //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
 //            if(countryCombo.getSelectionModel().getSelectedItem().toString().equals("U.S")) {
@@ -315,35 +343,47 @@ public class CustomersScreen implements Initializable {
 //                addressFormatAlert.setHeaderText("Incorrect Canadian address format.");
 //                addressFormatAlert.showAndWait();
 //            }
-        else {
-            try {
-                String customerIdString = customerIdTxt.getText();
-                int customerID = Integer.parseInt(customerIdString);
-                String name = customerNameTxt.getText();
-                String address = addressTxt.getText();
-                String zip = postalTxt.getText();
-                String phone = phoneTxt.getText();
-                String division = divisionCombo.getValue().toString();
-                for (FirstLevelDivisions f : divisionList) {
-                    if (f.getDivisionName().equals(division)) {
-                        divisionID = f.getDivisionId();
-                    }
+
+        try {
+            String customerIdString = customerIdTxt.getText();
+            int customerID = Integer.parseInt(customerIdString);
+            String name = customerNameTxt.getText();
+            String address = addressTxt.getText();
+            String zip = postalTxt.getText();
+            String phone = phoneTxt.getText();
+            String division = divisionCombo.getValue().toString();
+            String zoom = zoomEmailTxt.getText();
+
+            for (FirstLevelDivisions f : divisionList) {
+                if (f.getDivisionName().equals(division)) {
+                    divisionID = f.getDivisionId();
                 }
-
-                CustomersQuery.updateCustomer(customerID, name, address, zip, phone, divisionID);
-                customerList = CustomersQuery.selectAllCustomers();
-                customerTableView.setItems(customerList);
-                customerTableView.setItems(CustomersQuery.selectAllCustomers());
-
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/customersScreen.fxml")));
-                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 1231, 681);
-                stage.setScene(scene);
-                stage.show();
-            } catch (NumberFormatException | IOException e) {
-                e.printStackTrace();
             }
+            if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) == null)) {
+                VirtualCustomerQuery.insertVirtualCustomer(customerID, zoomEmail);
+            } else if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) != null)) {
+                VirtualCustomerQuery.updateVirtualCustomer(customerID, zoom);
+            } else {
+                VirtualCustomerQuery.deleteVirtualCustomer(customerID);
+            }
+
+            CustomersQuery.updateCustomer(customerID, name, address, zip, phone, divisionID);
+
+
+            customerList = CustomersQuery.selectAllCustomers();
+            customerTableView.setItems(customerList);
+            customerTableView.setItems(CustomersQuery.selectAllCustomers());
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/customersScreen.fxml")));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1231, 681);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (NumberFormatException | IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -531,10 +571,10 @@ public class CustomersScreen implements Initializable {
      * @param actionEvent - when the virtualAppointment radio button is selected or unselected.
      */
     public void onVirtualSelected(ActionEvent actionEvent) {
-        if (virtualAppointmentRadio.isSelected()) {
+        if (virtualCustomerRadio.isSelected()) {
             zoomEmailTxt.setDisable(false);
         }
-        if (!virtualAppointmentRadio.isSelected()) {
+        if (!virtualCustomerRadio.isSelected()) {
             zoomEmailTxt.clear();
             zoomEmailTxt.setDisable(true);
         }
