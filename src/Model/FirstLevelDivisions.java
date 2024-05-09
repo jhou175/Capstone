@@ -4,9 +4,9 @@ package Model;
  * This is the FirstLevelDivisions class that handles the constructor and getter methods.
  */
 public class FirstLevelDivisions {
-    private int divisionId;
-    private String divisionName;
-    private int countryId;
+    private final int divisionId;
+    private final String divisionName;
+    private final int countryId;
 
     /**
      * This constructor initializes the divisionId,divisionName,and countryId.

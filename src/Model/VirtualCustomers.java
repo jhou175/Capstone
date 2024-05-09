@@ -1,6 +1,6 @@
 package Model;
 
-public class VirtualCustomers extends Customers{
+public class VirtualCustomers extends Customers {
 
     private String zoomEmail;
     private int virtualCustomerId;
@@ -11,7 +11,7 @@ public class VirtualCustomers extends Customers{
         setZoomEmail(zoomEmail);
     }
 
-    public VirtualCustomers(int virtualCustomerId,String zoomEmail, int customerId){
+    public VirtualCustomers(int virtualCustomerId, String zoomEmail, int customerId) {
         super(customerId);
         this.virtualCustomerId = virtualCustomerId;
         this.zoomEmail = zoomEmail;
@@ -25,6 +25,7 @@ public class VirtualCustomers extends Customers{
     public int getVirtualID() {
         return virtualCustomerId;
     }
+
     public void setVirtualCustomerId(int virtualCustomerId) {
         this.virtualCustomerId = virtualCustomerId;
     }

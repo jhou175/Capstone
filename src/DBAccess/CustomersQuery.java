@@ -38,7 +38,7 @@ public abstract class CustomersQuery {
             ps.setInt(5, divisionId);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -145,7 +145,7 @@ public abstract class CustomersQuery {
                 String country = rs.getString("Country");
                 int countryId = rs.getInt("Country_ID");
                 String zoomEmail = rs.getString("Zoom_Email");
-                Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId,zoomEmail);
+                Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId, zoomEmail);
                 customerList.add(c);
             }
         } catch (SQLException e) {
@@ -217,16 +217,16 @@ public abstract class CustomersQuery {
     }
 
     public static int selectLastInserted() throws SQLException {
-       int ID = 0;
+        int ID = 0;
         String sql = "SELECT MAX(Customer_ID) from Customers ";
 
-        try{
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        ID=rs.getInt("Customer_ID");
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ID = rs.getInt("Customer_ID");
 
 
-    } catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 

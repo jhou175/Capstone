@@ -4,9 +4,9 @@ package Model;
  * This is the Users class and it handles the constructor and getter methods for the class.
  */
 public class Users {
-    private int userId;
-    private String userName;
-    private String password;
+    private final int userId;
+    private final String userName;
+    private final String password;
 
     /**
      * This constructor initializes the userId, userName, and password.

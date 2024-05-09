@@ -4,8 +4,8 @@ package Model;
  * This is the Contacts class that handles the contact constructor and getter methods.
  */
 public class Contacts {
-    private int contactId;
-    private String contactName;
+    private final int contactId;
+    private final String contactName;
 
     /**
      * The contacts constructor that initializes the contactId,contactName, and email.

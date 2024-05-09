@@ -38,7 +38,7 @@ public class CustomersScreen implements Initializable {
     public TableColumn<Object, Object> divisionCol;
     public TableColumn<Object, Object> countryNameCol;
     public TableColumn<Object, Object> countryIdCol;
-    public TableColumn<Object,Object> zoomEmailCol;
+    public TableColumn<Object, Object> zoomEmailCol;
 
     @FXML
     public TextField customerIdTxt;
@@ -66,7 +66,6 @@ public class CustomersScreen implements Initializable {
     ObservableList<Customers> customerList;
     ObservableList<FirstLevelDivisions> divisionList = FXCollections.observableArrayList();
     ObservableList<Countries> countriesList = FXCollections.observableArrayList();
-
 
 
     /**
@@ -135,11 +134,11 @@ public class CustomersScreen implements Initializable {
             blackAlert.showAndWait();
         }
         if (virtualCustomerRadio.isSelected() && (zoomEmail.isBlank())) {
-                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
-                blackAlert.setHeaderText("Blank input field(s).");
-                blackAlert.showAndWait();
+            Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
+            blackAlert.setHeaderText("Blank input field(s).");
+            blackAlert.showAndWait();
 
-        }else {
+        } else {
 
 
 //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
@@ -441,11 +440,7 @@ public class CustomersScreen implements Initializable {
         String zip = postalTxt.getText();
         String phone = phoneTxt.getText();
 
-        if ((name.isBlank()) || (address.isBlank()) || (zip.isBlank()) || (phone.isBlank()) || (divisionCombo.getSelectionModel().getSelectedItem() == null) || (countryCombo.getSelectionModel().getSelectedItem() == null)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (name.isBlank()) || (address.isBlank()) || (zip.isBlank()) || (phone.isBlank()) || (divisionCombo.getSelectionModel().getSelectedItem() == null) || (countryCombo.getSelectionModel().getSelectedItem() == null);
     }
 
     /**
@@ -592,6 +587,7 @@ public class CustomersScreen implements Initializable {
 
     /**
      * This method will display all virtual customers in the customers tableview as well as make the zoom_email table column visible.
+     *
      * @param actionEvent When the display virtual customer button is clicked.
      */
     public void onDisplayVirtualCustomers(ActionEvent actionEvent) {

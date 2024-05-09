@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
  * This is the Appointments class and it handles all the appointment's constructors and getter methods.
  */
 public class Appointments {
-    private int appointmentId;
-    private String title;
-    private String description;
-    private String location;
-    private String type;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private int customerId;
-    private int userId;
-    private int contactId;
+    private final int appointmentId;
+    private final String title;
+    private final String description;
+    private final String location;
+    private final String type;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final int customerId;
+    private final int userId;
+    private final int contactId;
     private String contactName;
 
     /**

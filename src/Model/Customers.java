@@ -4,7 +4,7 @@ package Model;
  * This is the Customers class and it handles the class constructors and all the getter methods for the class.
  */
 public class Customers {
-    private int customerId;
+    private final int customerId;
     private String customerName;
     private String address;
     private String postalCode;
@@ -27,7 +27,6 @@ public class Customers {
      * @param divisionName The String value of the customer's division name.
      * @param country      The String value of the customer's country.
      * @param countryId    The integer value for the customer's countryId.
-
      */
     public Customers(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName, String country, int countryId) {
         this.customerId = customerId;
@@ -101,7 +100,8 @@ public class Customers {
         this.customerId = customerId;
         this.customerName = customerName;
     }
-    public Customers(int customerId){
+
+    public Customers(int customerId) {
         this.customerId = customerId;
     }
 

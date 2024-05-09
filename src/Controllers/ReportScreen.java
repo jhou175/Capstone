@@ -265,9 +265,7 @@ public class ReportScreen implements Initializable {
 
         //Filtered anonymous lambda
         ObservableList<Customers> filteredCustomers = customerList.filtered(t -> {
-            if (t.getCountry().equals(countriesCombo.getValue().toString()))
-                return true;
-            return false;
+            return t.getCountry().equals(countriesCombo.getValue().toString());
         });
         numCustomersTxt.setText(String.valueOf(filteredCustomers.size()));
     }

@@ -50,13 +50,13 @@ public abstract class VirtualCustomerQuery {
         return v;
     }
 
-    public static void updateVirtualCustomer( int customerID,String zoom) {
+    public static void updateVirtualCustomer(int customerID, String zoom) {
         VirtualCustomers v = VirtualCustomerQuery.selectCustomerById(customerID);
         int virtualId = v.getVirtualID();
         String sql = "UPDATE virtual_customers SET Virtual_Customer_ID = ?, Zoom_Email = ? WHERE Customer_ID = ?";
         try {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ps.setInt(1,virtualId);
+            ps.setInt(1, virtualId);
             ps.setString(2, zoom);
             ps.setInt(3, customerID);
             ps.executeUpdate();

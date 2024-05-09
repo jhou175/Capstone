@@ -4,8 +4,8 @@ package Model;
  * This is the Countries class that handles the countries constructor and getter methods.
  */
 public class Countries {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     /**
      * This constrctor initilazes the countries id and name.
