@@ -13,6 +13,7 @@ public class Customers {
     private String divisionName;
     private String country;
     private int countryId;
+    private String zoomEmail;
 
     /**
      * This constructor overload initializes the customerId, customerName, address, postalCode, phone, divisionId, divisionName, country, and countryId.
@@ -26,6 +27,7 @@ public class Customers {
      * @param divisionName The String value of the customer's division name.
      * @param country      The String value of the customer's country.
      * @param countryId    The integer value for the customer's countryId.
+
      */
     public Customers(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName, String country, int countryId) {
         this.customerId = customerId;
@@ -37,6 +39,37 @@ public class Customers {
         this.divisionName = divisionName;
         this.country = country;
         this.countryId = countryId;
+    }
+
+    public String getZoomEmail() {
+        return zoomEmail;
+    }
+
+    /**
+     * This constructor overload initializes the customerId, customerName, address, postalCode, phone, divisionId, divisionName, country, countryId, and zoomEmail.
+     *
+     * @param customerId   The integer value for the id of the customer.
+     * @param customerName The String value of the customer.
+     * @param address      The String value of the customer's address.
+     * @param postalCode   The String value of the customer's postalCode.
+     * @param phone        The String value of the customer's phone number.
+     * @param divisionId   The integer value for the customer's divisionId.
+     * @param divisionName The String value of the customer's division name.
+     * @param country      The String value of the customer's country.
+     * @param countryId    The integer value for the customer's countryId.
+     * @param zoomEmail    The String value of the customer's zoom email address if they are a virtual customer.
+     */
+    public Customers(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName, String country, int countryId, String zoomEmail) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+        this.divisionName = divisionName;
+        this.country = country;
+        this.countryId = countryId;
+        this.zoomEmail = zoomEmail;
     }
 
     /**

@@ -25,9 +25,10 @@
                 <TableColumn fx:id="divisionCol" prefWidth="160.0" text="Division" />
                 <TableColumn fx:id="countryNameCol" prefWidth="61.0" text="Country" />
                 <TableColumn fx:id="countryIdCol" prefWidth="75.0" text="Country ID" />
+                <TableColumn fx:id="zoomEmailCol" prefWidth="75.0" text="Zoom Email" />
             </columns>
         </TableView>
-        <Label layoutX="253.0" layoutY="28.0" text="Customer Database">
+        <Label layoutX="253.0" layoutY="14.0" text="Customer Database">
             <font>
                 <Font size="24.0" />
             </font>
@@ -65,8 +66,9 @@
         </Pane>
         <Button fx:id="manageAptBtn" layoutX="760.0" layoutY="549.0" mnemonicParsing="false" onAction="#toAppointmentScreen" prefHeight="38.0" prefWidth="172.0" text="Navigate to Appointments" />
         <Button fx:id="reportsBtn" layoutX="1007.0" layoutY="551.0" mnemonicParsing="false" onAction="#toReportsScreen" prefHeight="38.0" prefWidth="172.0" text="Navigate to Reports" />
-        <TextField fx:id="customerSearchTxt" layoutX="473.0" layoutY="65.0" prefHeight="30.0" prefWidth="162.0" promptText="Customer Search" />
-        <Button fx:id="searchBtn" layoutX="646.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="30.0" prefWidth="54.0" text="Search" />
-        <Button fx:id="customerResetBtn" layoutX="14.0" layoutY="63.0" mnemonicParsing="false" onAction="#onResetCustomerTable" prefHeight="30.0" prefWidth="153.0" text="Display All Customers" />
+        <TextField fx:id="customerSearchTxt" layoutX="461.0" layoutY="65.0" prefHeight="30.0" prefWidth="162.0" promptText="Customer Search" />
+        <Button fx:id="searchBtn" layoutX="634.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="30.0" prefWidth="66.0" text="Search" />
+        <Button fx:id="customerResetBtn" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#onResetCustomerTable" prefHeight="30.0" prefWidth="153.0" text="Display All Customers" />
+      <Button fx:id="displayVirtualCustomersBtn" layoutX="192.0" layoutY="65.0" mnemonicParsing="false" onAction="#onDisplayVirtualCustomers" prefHeight="30.0" prefWidth="153.0" text="Display Virtual Customers" />
     </children>
 </AnchorPane>

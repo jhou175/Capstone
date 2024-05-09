@@ -2,6 +2,7 @@ package Controllers;
 
 import DBAccess.*;
 import Model.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +38,7 @@ public class CustomersScreen implements Initializable {
     public TableColumn<Object, Object> divisionCol;
     public TableColumn<Object, Object> countryNameCol;
     public TableColumn<Object, Object> countryIdCol;
+    public TableColumn<Object,Object> zoomEmailCol;
 
     @FXML
     public TextField customerIdTxt;
@@ -59,10 +61,12 @@ public class CustomersScreen implements Initializable {
     public Button reportsBtn;
     public Button searchBtn;
     public RadioButton virtualCustomerRadio;
+    public Button customerResetBtn;
 
     ObservableList<Customers> customerList;
     ObservableList<FirstLevelDivisions> divisionList = FXCollections.observableArrayList();
     ObservableList<Countries> countriesList = FXCollections.observableArrayList();
+
 
 
     /**
@@ -83,12 +87,15 @@ public class CustomersScreen implements Initializable {
         divisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         countryNameCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         countryIdCol.setCellValueFactory(new PropertyValueFactory<>("countryId"));
+        zoomEmailCol.setCellValueFactory(new PropertyValueFactory<>("zoomEmail"));
+
 
         divisionList = FirstLevelDivisionQuery.selectAllDivisionId();
         countriesList = CountriesQuery.selectAllCountries();
 
         customerList = CustomersQuery.selectAllCustomers();
         customerTableView.setItems(customerList);
+
 
         divisionCombo.setItems(divisionList);
         divisionCombo.setVisibleRowCount(5);
@@ -99,6 +106,7 @@ public class CustomersScreen implements Initializable {
         updateCustomerBtn.setDisable(true);
         addCustomerBtn.setDisable(false);
         zoomEmailTxt.setDisable(true);
+        zoomEmailCol.setVisible(false);
 
     }
 
@@ -555,13 +563,15 @@ public class CustomersScreen implements Initializable {
     }
 
     /**
-     * This method will reset the customer tableview and display all customers and thenclear the customerSearch textfield.
+     * This method will reset the customer tableview and display all customers and then clear the customerSearch text field. It also hides the zoom_email table column.
      *
      * @param actionEvent - when the customerReset button is pressed.
      */
     public void onResetCustomerTable(ActionEvent actionEvent) {
+        zoomEmailCol.setVisible(false);
         ObservableList<Customers> allCustomers = CustomersQuery.selectAllCustomers();
         customerTableView.setItems(allCustomers);
+        customerTableView.scrollToColumnIndex(0);
         customerSearchTxt.clear();
     }
 
@@ -578,6 +588,17 @@ public class CustomersScreen implements Initializable {
             zoomEmailTxt.clear();
             zoomEmailTxt.setDisable(true);
         }
+    }
+
+    /**
+     * This method will display all virtual customers in the customers tableview as well as make the zoom_email table column visible.
+     * @param actionEvent When the display virtual customer button is clicked.
+     */
+    public void onDisplayVirtualCustomers(ActionEvent actionEvent) {
+        customerList = CustomersQuery.selectAllVirtualCustomers();
+        zoomEmailCol.setVisible(true);
+        customerTableView.setItems(customerList);
+        customerTableView.scrollToColumnIndex(0);
     }
 }
 

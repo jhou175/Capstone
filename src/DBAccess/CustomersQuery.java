@@ -50,7 +50,7 @@ public abstract class CustomersQuery {
     /**
      * This method handles the sql query to update an existing customer in the Customer table of the database.
      *
-     * @param customerName String value for the customerName.
+     * @param customerName String value for the customerName.+
      * @param address      String value for the address.
      * @param zip          String value for the postal code.
      * @param phone        String value for phone number variable.
@@ -90,12 +90,6 @@ public abstract class CustomersQuery {
 
     }
 
-    /**
-     * This method handles the sql query that retrieves all the customers in the customers table.
-     *
-     * @return ObservableArrayList customerList.
-     */
-
     public static ObservableList<Customers> selectAllCustomers() {
 
         ObservableList<Customers> customerList = FXCollections.observableArrayList();
@@ -115,7 +109,43 @@ public abstract class CustomersQuery {
                 String divisionName = rs.getString("Division");
                 String country = rs.getString("Country");
                 int countryId = rs.getInt("Country_ID");
+
                 Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId);
+                customerList.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerList;
+    }
+
+    /**
+     * This method handles the sql query that retrieves all the virtual customers in the customers table.
+     *
+     * @return ObservableArrayList customerList.
+     */
+
+    public static ObservableList<Customers> selectAllVirtualCustomers() {
+
+        ObservableList<Customers> customerList = FXCollections.observableArrayList();
+        String sql = "SELECT customers.Customer_ID, customers.Customer_Name,customers.Address,customers.Postal_Code,customers.Phone,customers.Division_ID,first_level_divisions.Division," +
+                " countries.Country, countries.Country_ID, virtual_customers.Zoom_Email FROM customers JOIN first_level_divisions ON customers.Division_ID =" +
+                "first_level_divisions.Division_ID JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID JOIN virtual_customers ON customers.Customer_ID = virtual_customers.Customer_ID";
+        try {
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String address = rs.getString("Address");
+                String zip = rs.getString("Postal_Code");
+                String phone = rs.getString("Phone");
+                int divisionId = rs.getInt("Division_ID");
+                String divisionName = rs.getString("Division");
+                String country = rs.getString("Country");
+                int countryId = rs.getInt("Country_ID");
+                String zoomEmail = rs.getString("Zoom_Email");
+                Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId,zoomEmail);
                 customerList.add(c);
             }
         } catch (SQLException e) {
