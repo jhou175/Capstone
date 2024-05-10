@@ -2,7 +2,6 @@ package Controllers;
 
 import DBAccess.*;
 import Model.*;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -62,6 +60,8 @@ public class CustomersScreen implements Initializable {
     public Button searchBtn;
     public RadioButton virtualCustomerRadio;
     public Button customerResetBtn;
+    public Button displayVirtualCustomersBtn;
+    public TableColumn<Object, Object> vCustomerCol;
 
     ObservableList<Customers> customerList;
     ObservableList<FirstLevelDivisions> divisionList = FXCollections.observableArrayList();
@@ -87,6 +87,7 @@ public class CustomersScreen implements Initializable {
         countryNameCol.setCellValueFactory(new PropertyValueFactory<>("country"));
         countryIdCol.setCellValueFactory(new PropertyValueFactory<>("countryId"));
         zoomEmailCol.setCellValueFactory(new PropertyValueFactory<>("zoomEmail"));
+        vCustomerCol.setCellValueFactory(new PropertyValueFactory<>("virtualCustomerId"));
 
 
         divisionList = FirstLevelDivisionQuery.selectAllDivisionId();
@@ -106,6 +107,7 @@ public class CustomersScreen implements Initializable {
         addCustomerBtn.setDisable(false);
         zoomEmailTxt.setDisable(true);
         zoomEmailCol.setVisible(false);
+        vCustomerCol.setVisible(false);
 
     }
 
@@ -564,6 +566,7 @@ public class CustomersScreen implements Initializable {
      */
     public void onResetCustomerTable(ActionEvent actionEvent) {
         zoomEmailCol.setVisible(false);
+        vCustomerCol.setVisible(true);
         ObservableList<Customers> allCustomers = CustomersQuery.selectAllCustomers();
         customerTableView.setItems(allCustomers);
         customerTableView.scrollToColumnIndex(0);
@@ -593,6 +596,7 @@ public class CustomersScreen implements Initializable {
     public void onDisplayVirtualCustomers(ActionEvent actionEvent) {
         customerList = CustomersQuery.selectAllVirtualCustomers();
         zoomEmailCol.setVisible(true);
+        vCustomerCol.setVisible(true);
         customerTableView.setItems(customerList);
         customerTableView.scrollToColumnIndex(0);
     }

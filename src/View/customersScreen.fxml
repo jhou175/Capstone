@@ -11,91 +11,65 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="1225.0" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomersScreen">
+<AnchorPane prefHeight="620.0" prefWidth="1225.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomersScreen">
     <children>
 
-        <TableView fx:id="customerTableView" layoutX="14.0" layoutY="105.0" prefHeight="415.0" prefWidth="686.0"
-                   style="-fx-border-color: black;">
+        <TableView fx:id="customerTableView" layoutX="14.0" layoutY="105.0" prefHeight="415.0" prefWidth="686.0" style="-fx-border-color: black;">
             <columns>
-                <TableColumn fx:id="customerIdCol" prefWidth="82.0" text="Customer ID"/>
-                <TableColumn fx:id="customerNameCol" prefWidth="125.0" text="Customer Name"/>
-                <TableColumn fx:id="customerAddressCol" prefWidth="175.0" text="Address"/>
-                <TableColumn fx:id="customerPostalCol" prefWidth="82.0" text="Postal Code"/>
-                <TableColumn fx:id="customerPhoneCol" minWidth="0.0" prefWidth="122.0" text="Phone "/>
-                <TableColumn fx:id="customerDivisionCol" prefWidth="73.0" text="Division ID"/>
-                <TableColumn fx:id="divisionCol" prefWidth="160.0" text="Division"/>
-                <TableColumn fx:id="countryNameCol" prefWidth="61.0" text="Country"/>
-                <TableColumn fx:id="countryIdCol" prefWidth="75.0" text="Country ID"/>
-                <TableColumn fx:id="zoomEmailCol" prefWidth="75.0" text="Zoom Email"/>
+                <TableColumn fx:id="customerIdCol" prefWidth="82.0" text="Customer ID" />
+                <TableColumn fx:id="customerNameCol" prefWidth="125.0" text="Customer Name" />
+                <TableColumn fx:id="customerAddressCol" prefWidth="175.0" text="Address" />
+                <TableColumn fx:id="customerPostalCol" prefWidth="82.0" text="Postal Code" />
+                <TableColumn fx:id="customerPhoneCol" minWidth="0.0" prefWidth="122.0" text="Phone " />
+                <TableColumn fx:id="customerDivisionCol" prefWidth="73.0" text="Division ID" />
+                <TableColumn fx:id="divisionCol" prefWidth="160.0" text="Division" />
+                <TableColumn fx:id="countryNameCol" prefWidth="61.0" text="Country" />
+                <TableColumn fx:id="countryIdCol" prefWidth="75.0" text="Country ID" />
+            <TableColumn fx:id="vCustomerCol" prefWidth="150.0" text="Virtual Customer ID" />
+                <TableColumn fx:id="zoomEmailCol" prefWidth="125.0" text="Zoom Email" />
             </columns>
         </TableView>
         <Label layoutX="253.0" layoutY="14.0" text="Customer Database">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="modifyCustomerBtn" layoutX="115.0" layoutY="551.0" mnemonicParsing="false"
-                onAction="#modifyCustomer" prefHeight="38.0" prefWidth="153.0" text="Modify Customer"/>
-        <Button fx:id="deleteCustomerBtn" layoutX="448.0" layoutY="551.0" mnemonicParsing="false"
-                onAction="#deleteCustomer" prefHeight="38.0" prefWidth="153.0" text="Delete Customer"/>
-        <Pane layoutX="728.0" layoutY="14.0" prefHeight="506.0" prefWidth="461.0"
-              style="-fx-background-color: #d3d3d3; -fx-border-color: black;">
+        <Button fx:id="modifyCustomerBtn" layoutX="115.0" layoutY="551.0" mnemonicParsing="false" onAction="#modifyCustomer" prefHeight="38.0" prefWidth="153.0" text="Modify Customer" />
+        <Button fx:id="deleteCustomerBtn" layoutX="448.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="38.0" prefWidth="153.0" text="Delete Customer" />
+        <Pane layoutX="728.0" layoutY="14.0" prefHeight="506.0" prefWidth="461.0" style="-fx-background-color: #d3d3d3; -fx-border-color: black;">
             <children>
                 <Label layoutX="155.0" layoutY="14.0" text="Customer Details">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                 </Label>
-                <TextField fx:id="customerIdTxt" disable="true" layoutX="23.0" layoutY="73.0" prefHeight="38.0"
-                           prefWidth="200.0" promptText="Customer ID Auto-Generates" style="-fx-border-color: black;"/>
-                <TextField fx:id="customerNameTxt" layoutX="247.0" layoutY="73.0" prefHeight="38.0" prefWidth="200.0"
-                           style="-fx-border-color: black;"/>
-                <TextField fx:id="addressTxt" layoutX="23.0" layoutY="142.0" prefHeight="38.0" prefWidth="200.0"
-                           style="-fx-border-color: black;"/>
-                <TextField fx:id="postalTxt" layoutX="247.0" layoutY="142.0" prefHeight="38.0" prefWidth="200.0"
-                           style="-fx-border-color: black;"/>
-                <TextField fx:id="phoneTxt" layoutX="23.0" layoutY="211.0" prefHeight="38.0" prefWidth="200.0"
-                           style="-fx-border-color: black;"/>
-                <ComboBox fx:id="countryCombo" layoutX="247.0" layoutY="211.0" onAction="#countrySelected"
-                          prefHeight="38.0" prefWidth="200.0" promptText="Country" style="-fx-border-color: black;"/>
-                <ComboBox fx:id="divisionCombo" layoutX="247.0" layoutY="280.0" prefHeight="38.0" prefWidth="200.0"
-                          promptText="Division" style="-fx-border-color: black;"/>
-                <Button fx:id="addCustomerBtn" layoutX="32.0" layoutY="441.0" mnemonicParsing="false"
-                        onAction="#addCustomer" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;"
-                        text="Add Customer"/>
-                <Button fx:id="updateCustomerBtn" layoutX="294.0" layoutY="441.0" mnemonicParsing="false"
-                        onAction="#updateCustomer" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;"
-                        text="Update Customer"/>
-                <Button fx:id="clearBtn" layoutX="163.0" layoutY="386.0" mnemonicParsing="false"
-                        onAction="#clearAllFields" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;"
-                        text="Clear All Fields"/>
-                <Label layoutX="23.0" layoutY="56.0" text="Customer ID"/>
-                <Label layoutX="247.0" layoutY="56.0" text="Customer Name"/>
-                <Label layoutX="23.0" layoutY="125.0" text="Street Address"/>
-                <Label layoutX="247.0" layoutY="125.0" text="Postal Code"/>
-                <Label layoutX="24.0" layoutY="194.0" text="Phone Number"/>
-                <Label layoutX="248.0" layoutY="194.0" text="Country"/>
-                <Label layoutX="247.0" layoutY="263.0" text="Division"/>
-                <RadioButton fx:id="virtualCustomerRadio" layoutX="21.0" layoutY="257.0" mnemonicParsing="false"
-                             onAction="#onVirtualSelected" prefHeight="30.0" prefWidth="136.0" text="Virtual Customer"/>
-                <TextField fx:id="zoomEmailTxt" layoutX="23.0" layoutY="308.0" prefHeight="38.0" prefWidth="200.0"
-                           style="-fx-border-color: black;"/>
-                <Label layoutX="24.0" layoutY="291.0" text="Zoom Email"/>
+                <TextField fx:id="customerIdTxt" disable="true" layoutX="23.0" layoutY="73.0" prefHeight="38.0" prefWidth="200.0" promptText="Customer ID Auto-Generates" style="-fx-border-color: black;" />
+                <TextField fx:id="customerNameTxt" layoutX="247.0" layoutY="73.0" prefHeight="38.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                <TextField fx:id="addressTxt" layoutX="23.0" layoutY="142.0" prefHeight="38.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                <TextField fx:id="postalTxt" layoutX="247.0" layoutY="142.0" prefHeight="38.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                <TextField fx:id="phoneTxt" layoutX="23.0" layoutY="211.0" prefHeight="38.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                <ComboBox fx:id="countryCombo" layoutX="247.0" layoutY="211.0" onAction="#countrySelected" prefHeight="38.0" prefWidth="200.0" promptText="Country" style="-fx-border-color: black;" />
+                <ComboBox fx:id="divisionCombo" layoutX="247.0" layoutY="280.0" prefHeight="38.0" prefWidth="200.0" promptText="Division" style="-fx-border-color: black;" />
+                <Button fx:id="addCustomerBtn" layoutX="32.0" layoutY="441.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;" text="Add Customer" />
+                <Button fx:id="updateCustomerBtn" layoutX="294.0" layoutY="441.0" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;" text="Update Customer" />
+                <Button fx:id="clearBtn" layoutX="163.0" layoutY="386.0" mnemonicParsing="false" onAction="#clearAllFields" prefHeight="38.0" prefWidth="153.0" style="-fx-border-color: black;" text="Clear All Fields" />
+                <Label layoutX="23.0" layoutY="56.0" text="Customer ID" />
+                <Label layoutX="247.0" layoutY="56.0" text="Customer Name" />
+                <Label layoutX="23.0" layoutY="125.0" text="Street Address" />
+                <Label layoutX="247.0" layoutY="125.0" text="Postal Code" />
+                <Label layoutX="24.0" layoutY="194.0" text="Phone Number" />
+                <Label layoutX="248.0" layoutY="194.0" text="Country" />
+                <Label layoutX="247.0" layoutY="263.0" text="Division" />
+                <RadioButton fx:id="virtualCustomerRadio" layoutX="21.0" layoutY="257.0" mnemonicParsing="false" onAction="#onVirtualSelected" prefHeight="30.0" prefWidth="136.0" text="Virtual Customer" />
+                <TextField fx:id="zoomEmailTxt" layoutX="23.0" layoutY="308.0" prefHeight="38.0" prefWidth="200.0" style="-fx-border-color: black;" />
+                <Label layoutX="24.0" layoutY="291.0" text="Zoom Email" />
             </children>
         </Pane>
-        <Button fx:id="manageAptBtn" layoutX="760.0" layoutY="549.0" mnemonicParsing="false"
-                onAction="#toAppointmentScreen" prefHeight="38.0" prefWidth="172.0" text="Navigate to Appointments"/>
-        <Button fx:id="reportsBtn" layoutX="1007.0" layoutY="551.0" mnemonicParsing="false" onAction="#toReportsScreen"
-                prefHeight="38.0" prefWidth="172.0" text="Navigate to Reports"/>
-        <TextField fx:id="customerSearchTxt" layoutX="461.0" layoutY="65.0" prefHeight="30.0" prefWidth="162.0"
-                   promptText="Customer Search"/>
-        <Button fx:id="searchBtn" layoutX="634.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSearch"
-                prefHeight="30.0" prefWidth="66.0" text="Search"/>
-        <Button fx:id="customerResetBtn" layoutX="14.0" layoutY="65.0" mnemonicParsing="false"
-                onAction="#onResetCustomerTable" prefHeight="30.0" prefWidth="153.0" text="Display All Customers"/>
-        <Button fx:id="displayVirtualCustomersBtn" layoutX="192.0" layoutY="65.0" mnemonicParsing="false"
-                onAction="#onDisplayVirtualCustomers" prefHeight="30.0" prefWidth="153.0"
-                text="Display Virtual Customers"/>
+        <Button fx:id="manageAptBtn" layoutX="760.0" layoutY="549.0" mnemonicParsing="false" onAction="#toAppointmentScreen" prefHeight="38.0" prefWidth="172.0" text="Navigate to Appointments" />
+        <Button fx:id="reportsBtn" layoutX="1007.0" layoutY="551.0" mnemonicParsing="false" onAction="#toReportsScreen" prefHeight="38.0" prefWidth="172.0" text="Navigate to Reports" />
+        <TextField fx:id="customerSearchTxt" layoutX="461.0" layoutY="65.0" prefHeight="30.0" prefWidth="162.0" promptText="Customer Search" />
+        <Button fx:id="searchBtn" layoutX="634.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="30.0" prefWidth="66.0" text="Search" />
+        <Button fx:id="customerResetBtn" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#onResetCustomerTable" prefHeight="30.0" prefWidth="153.0" text="Display All Customers" />
+        <Button fx:id="displayVirtualCustomersBtn" layoutX="192.0" layoutY="65.0" mnemonicParsing="false" onAction="#onDisplayVirtualCustomers" prefHeight="30.0" prefWidth="153.0" text="Display Virtual Customers" />
     </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ public class Customers {
     private String country;
     private int countryId;
     private String zoomEmail;
+    private int virtualCustomerId;
 
     /**
      * This constructor overload initializes the customerId, customerName, address, postalCode, phone, divisionId, divisionName, country, and countryId.
@@ -40,9 +41,8 @@ public class Customers {
         this.countryId = countryId;
     }
 
-    public String getZoomEmail() {
-        return zoomEmail;
-    }
+
+
 
     /**
      * This constructor overload initializes the customerId, customerName, address, postalCode, phone, divisionId, divisionName, country, countryId, and zoomEmail.
@@ -58,7 +58,7 @@ public class Customers {
      * @param countryId    The integer value for the customer's countryId.
      * @param zoomEmail    The String value of the customer's zoom email address if they are a virtual customer.
      */
-    public Customers(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName, String country, int countryId, String zoomEmail) {
+    public Customers(int customerId, String customerName, String address, String postalCode, String phone, int divisionId, String divisionName, String country, int countryId, int virtualCustomerId, String zoomEmail) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -69,6 +69,7 @@ public class Customers {
         this.country = country;
         this.countryId = countryId;
         this.zoomEmail = zoomEmail;
+        this.virtualCustomerId = virtualCustomerId;
     }
 
     /**
@@ -190,6 +191,22 @@ public class Customers {
         return divisionId;
     }
 
+    /**
+     * This method retrieves the virtual customer's zoom email address.
+     * @return The zoomEmail
+     */
+
+    /**
+     * This method retrieves the virtual customer's Id
+     * @return The virtualCustomerId
+     */
+    public int getVirtualCustomerId() {
+        return virtualCustomerId;
+    }
+
+    public String getZoomEmail() {
+        return zoomEmail;
+    }
 
     /**
      * This overloaded method retrieves and returns the Customer's id and name as a single string.

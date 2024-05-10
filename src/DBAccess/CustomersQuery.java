@@ -129,7 +129,7 @@ public abstract class CustomersQuery {
 
         ObservableList<Customers> customerList = FXCollections.observableArrayList();
         String sql = "SELECT customers.Customer_ID, customers.Customer_Name,customers.Address,customers.Postal_Code,customers.Phone,customers.Division_ID,first_level_divisions.Division," +
-                " countries.Country, countries.Country_ID, virtual_customers.Zoom_Email FROM customers JOIN first_level_divisions ON customers.Division_ID =" +
+                " countries.Country, countries.Country_ID, virtual_customers.Virtual_Customer_ID, virtual_customers.Zoom_Email FROM customers JOIN first_level_divisions ON customers.Division_ID =" +
                 "first_level_divisions.Division_ID JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID JOIN virtual_customers ON customers.Customer_ID = virtual_customers.Customer_ID";
         try {
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -144,8 +144,9 @@ public abstract class CustomersQuery {
                 String divisionName = rs.getString("Division");
                 String country = rs.getString("Country");
                 int countryId = rs.getInt("Country_ID");
+                int virtualCustomerId = rs.getInt("Virtual_Customer_ID");
                 String zoomEmail = rs.getString("Zoom_Email");
-                Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId, zoomEmail);
+                Customers c = new Customers(customerId, customerName, address, zip, phone, divisionId, divisionName, country, countryId, virtualCustomerId, zoomEmail);
                 customerList.add(c);
             }
         } catch (SQLException e) {
