@@ -135,7 +135,7 @@ public class CustomersScreen implements Initializable {
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
         }
-        if (virtualCustomerRadio.isSelected() && (zoomEmail.isBlank())) {
+        else if (virtualCustomerRadio.isSelected() && (zoomEmail.isBlank())) {
             Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
@@ -195,20 +195,38 @@ public class CustomersScreen implements Initializable {
 
 
     /**
-     * This method clears all text fields and combo box selections by reloading the customers screen.
+     * This method clears all text fields and combo box selections by using the .clear() method and by resetting the combo boxes to default.
+     * Commented out the was of clearing all fields by reloading the page.
      *
      * @param actionEvent When the clearBtn is pressed.
      */
     public void clearAllFields(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/CustomersScreen.fxml")));
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        customerNameTxt.clear();
+        addressTxt.clear();
+        postalTxt.clear();
+        phoneTxt.clear();
+
+        divisionList = FirstLevelDivisionQuery.selectAllDivisionId();
+        countriesList = CountriesQuery.selectAllCountries();
+        divisionCombo.setItems(divisionList);
+        divisionCombo.setVisibleRowCount(5);
+        divisionCombo.setPromptText("Please Select a Division");
+        countryCombo.setItems(countriesList);
+        countryCombo.setPromptText("Please Select a Country");
+
+        if(virtualCustomerRadio.isSelected()){
+            zoomEmailTxt.clear();
         }
+
+//        try {
+//            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/CustomersScreen.fxml")));
+//            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -329,14 +347,13 @@ public class CustomersScreen implements Initializable {
             blackAlert.setHeaderText("Blank input field(s).");
             blackAlert.showAndWait();
         }
-        if (virtualCustomerRadio.isSelected()) {
-            if (zoomEmail.isBlank()) {
-                Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
-                blackAlert.setHeaderText("Blank input field(s).");
-                blackAlert.showAndWait();
-            }
-        }
-        //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
+        else if (virtualCustomerRadio.isSelected() && (zoomEmail.isBlank())) {
+            Alert blackAlert = new Alert(Alert.AlertType.ERROR, "Zoom email field is blank, please enter in a zoom email or deselect virtual customer.");
+            blackAlert.setHeaderText("Blank input field(s).");
+            blackAlert.showAndWait();
+
+        } else {
+            //        else if (!addressRegex(address, countryCombo.getSelectionModel().getSelectedItem().toString())) {
 //            if(countryCombo.getSelectionModel().getSelectedItem().toString().equals("U.S")) {
 //                Alert addressFormatAlert = new Alert(Alert.AlertType.ERROR, "Please enter in an United States address in the format of ex:\n 123 ABC Street, White Plains");
 //                addressFormatAlert.setHeaderText("Incorrect United States address format.");
@@ -353,44 +370,45 @@ public class CustomersScreen implements Initializable {
 //                addressFormatAlert.showAndWait();
 //            }
 
-        try {
-            String customerIdString = customerIdTxt.getText();
-            int customerID = Integer.parseInt(customerIdString);
-            String name = customerNameTxt.getText();
-            String address = addressTxt.getText();
-            String zip = postalTxt.getText();
-            String phone = phoneTxt.getText();
-            String division = divisionCombo.getValue().toString();
-            String zoom = zoomEmailTxt.getText();
+            try {
+                String customerIdString = customerIdTxt.getText();
+                int customerID = Integer.parseInt(customerIdString);
+                String name = customerNameTxt.getText();
+                String address = addressTxt.getText();
+                String zip = postalTxt.getText();
+                String phone = phoneTxt.getText();
+                String division = divisionCombo.getValue().toString();
+                String zoom = zoomEmailTxt.getText();
 
-            for (FirstLevelDivisions f : divisionList) {
-                if (f.getDivisionName().equals(division)) {
-                    divisionID = f.getDivisionId();
+                for (FirstLevelDivisions f : divisionList) {
+                    if (f.getDivisionName().equals(division)) {
+                        divisionID = f.getDivisionId();
+                    }
                 }
+                if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) == null)) {
+                    VirtualCustomerQuery.insertVirtualCustomer(customerID, zoomEmail);
+                } else if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) != null)) {
+                    VirtualCustomerQuery.updateVirtualCustomer(customerID, zoom);
+                } else {
+                    VirtualCustomerQuery.deleteVirtualCustomer(customerID);
+                }
+
+                CustomersQuery.updateCustomer(customerID, name, address, zip, phone, divisionID);
+
+
+                customerList = CustomersQuery.selectAllCustomers();
+                customerTableView.setItems(customerList);
+                customerTableView.setItems(CustomersQuery.selectAllCustomers());
+
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/customersScreen.fxml")));
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1231, 681);
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
             }
-            if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) == null)) {
-                VirtualCustomerQuery.insertVirtualCustomer(customerID, zoomEmail);
-            } else if ((virtualCustomerRadio.isSelected()) && (zoom != null) && (VirtualCustomerQuery.selectCustomerById(customerID) != null)) {
-                VirtualCustomerQuery.updateVirtualCustomer(customerID, zoom);
-            } else {
-                VirtualCustomerQuery.deleteVirtualCustomer(customerID);
-            }
-
-            CustomersQuery.updateCustomer(customerID, name, address, zip, phone, divisionID);
-
-
-            customerList = CustomersQuery.selectAllCustomers();
-            customerTableView.setItems(customerList);
-            customerTableView.setItems(CustomersQuery.selectAllCustomers());
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/customersScreen.fxml")));
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1231, 681);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (NumberFormatException | IOException e) {
-            e.printStackTrace();
         }
 
     }
