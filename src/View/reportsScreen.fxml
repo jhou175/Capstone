@@ -36,7 +36,7 @@
         </font>
     </RadioButton>
     <Button fx:id="customersNavBtn" layoutX="1012.0" layoutY="443.0" mnemonicParsing="false" prefHeight="35.0"
-            prefWidth="206.0" style="-fx-border-color: black;" text="Navigate to Customers Screen"/>
+            prefWidth="206.0" style="-fx-border-color: black;" text="Navigate to Customers"/>
     <Label layoutX="363.0" layoutY="17.0" text="Reports">
         <font>
             <Font size="24.0"/>
@@ -75,7 +75,7 @@
     </Pane>
     <Button fx:id="appointmentsNavBtn" layoutX="1012.0" layoutY="501.0" mnemonicParsing="false"
             onAction="#backToAppointments" prefHeight="35.0" prefWidth="206.0" style="-fx-border-color: black;"
-            text="Navigate to Appointments Screen"/>
+            text="Navigate to Appointments"/>
     <ComboBox fx:id="contactCombo" layoutX="569.0" layoutY="466.0" onAction="#filterByContact" prefHeight="35.0"
               prefWidth="164.0" promptText="Contact Name" style="-fx-border-color: black;"/>
     <Label layoutX="569.0" layoutY="433.0" text="Filter by Contact ID &amp; Name">

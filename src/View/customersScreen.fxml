@@ -29,7 +29,7 @@
                 <TableColumn fx:id="zoomEmailCol" prefWidth="125.0" text="Zoom Email" />
             </columns>
         </TableView>
-        <Label layoutX="253.0" layoutY="14.0" text="Customer Database">
+        <Label layoutX="301.0" layoutY="14.0" text="Customers">
             <font>
                 <Font size="24.0" />
             </font>
