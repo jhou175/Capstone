@@ -141,7 +141,9 @@ public class ReportScreen implements Initializable {
         appointmentList = AppointmentsQuery.selectAllAppointments();
         for (Appointments a : appointmentList) {
             String type = a.getType();
-            types.add(type);
+            if(!types.contains(type)) {
+                types.add(type);
+            }
         }
         typeCombo.setItems(types);
     }
