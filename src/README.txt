@@ -14,7 +14,7 @@ delete customers and appointments.
 
 *Directions on running the program*
     *Launch program.
-    *On the login screen, enter the credentials and log in.
+    *On the login screen, enter the credentials and log in. (Username: "admin" Password: "admin" OR Username: "test" Password: "test" )
     *Once logged in, user will be taken to the customers screen. The user will be able to view, modify, update, and
     add customers.
     *The user can use the navigate buttons to either navigate to the appointments or reports screen.

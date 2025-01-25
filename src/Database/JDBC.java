@@ -1,5 +1,6 @@
 package Database;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,6 +30,7 @@ public abstract class JDBC {
             System.out.println("Connection successful!");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+
         }
     }
 
